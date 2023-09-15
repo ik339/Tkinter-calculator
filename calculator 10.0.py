@@ -6,7 +6,7 @@ calc.geometry("300x500")
 calc.configure(background = "beige") 
 frame =LabelFrame(calc, padx=35, pady=35) 
 frame.pack(padx=40, pady=40) 
-e = Entry(calc,width=20,fg='darkgreen',font=("calibri"),textvariable=StringVar) #instead of text
+e = Entry(calc,width=20,fg='darkgreen',font=("calibri"),textvariable=StringVar)
 e.pack()
 #FUNCTIONS:
 def pressclear():
@@ -16,75 +16,47 @@ def buttonclick(string):
     new_etext= etext + string
     e.delete(0, END)
     e.insert(0,new_etext)
-
 def Performcalculation():
     etext = e.get()     
-    list_etext = re.split(r'(\D)',etext) #op and num separate
+    list_etext = re.split(r'(\D)',etext) #separate string to list
     print(list_etext)
-    newlist = list_etext [:]   #supposed ot go here, before the loop?? #why? newlist = list[:]
-
-#control loop
+    newlist = list_etext [:]  
+   #control loop:
     for i in range(0,len(list_etext)-1):
         if list_etext[i].isnumeric() == False:
             print (list_etext[i-1])
             print(list_etext[i])
             print(list_etext[i+1])
             print("---")
-
-
-    for i in range(0, len(list_etext)-1): #eg 5-1*3. #
+   #Reverse BODMAS and calculation loops:
+    for i in range(0, len(list_etext)-1): 
         if list_etext[i] == "-":
-            exp_result = str(float(list_etext[i-1]) - float(list_etext[i+1])) #does 5-1
-            print(exp_result)#=4
-
-            exp_slice_start = i-1 #slicing basically #i-1 is 5.
-            exp_slice_end = i+1 #inclusive  i+1 is 1.
-
-            newlist = list_etext[:exp_slice_start]+[exp_result]+ list_etext[exp_slice_end+1:] #+1 means the index after i+1, so i+2. need to do it that way bc there will be otherwise an error. #concatenate, remove slice. #automaticaaly inserts result? how? # need new list to hold values so no index error issues. 
-            print(newlist) 
-
-
+            exp_result = str(float(list_etext[i-1]) - float(list_etext[i+1])) 
+            exp_slice_start = i-1 
+            exp_slice_end = i+1 
+            newlist = list_etext[:exp_slice_start]+[exp_result]+ list_etext[exp_slice_end+1:] #concatenate, remove slice.
     for i in range(0, len(list_etext)-1): 
         if list_etext[i] == "+":
             exp_result = str(float(list_etext[i-1]) + float(list_etext[i+1]))
-            print(exp_result)
-
-            exp_slice_start = i-1 #slicing basically
-            exp_slice_end = i+1 #inclusive 
-
-            newlist = list_etext[:exp_slice_start]+[exp_result]+ list_etext[exp_slice_end+1:] #concatenate, remove slice
-            print(newlist)  
+            exp_slice_start = i-1 
+            exp_slice_end = i+1 
+            newlist = list_etext[:exp_slice_start]+[exp_result]+ list_etext[exp_slice_end+1:] 
 
     for i in range(0, len(newlist)-1):
         if newlist[i] == "*":
             exp_result = str(float(newlist[i-1]) * float(newlist[i+1]))
-            print(exp_result)
-
-            exp_slice_start = i-1 #slicing basically
-            exp_slice_end = i+1 #inclusive 
-
-            newlist = newlist[:exp_slice_start]+[exp_result]+ newlist[exp_slice_end+1:] #concatenate, remove slice
-            print(newlist)  
-
-            # list.insert(exp_slice_start, exp_result) # insert at index, and then rthe result. #after all calculations ct needs to be updated into a new variable??
-            # print(list)
+            exp_slice_start = i-1 
+            exp_slice_end = i+1 
+            newlist = newlist[:exp_slice_start]+[exp_result]+ newlist[exp_slice_end+1:] 
 
     for i in range(0, len(newlist)-1):
         if newlist[i] == "/":
             exp_result = str(float(newlist[i-1]) / float(newlist[i+1]))
-            print(exp_result)
-
-            exp_slice_start = i-1 #slicing basically
-            exp_slice_end = i+1 #inclusive 
-
-            newlist = newlist[:exp_slice_start]+[exp_result]+ newlist[exp_slice_end+1:] #concatenate, remove slice
-            print(newlist)  
-
-            # list.insert(exp_slice_start, exp_result) # insert at index, and then rthe result. #after all calculations ct needs to be updated into a new variable??
-            # print(list)
-
+            exp_slice_start = i-1 
+            exp_slice_end = i+1  
+            newlist = newlist[:exp_slice_start]+[exp_result]+ newlist[exp_slice_end+1:]
     e.delete(0, END)
-    e.insert(0, newlist[0])    #[0] = use first element of the new list?
+    e.insert(0, newlist[0]) 
     
 #buttons:
 clearbutton = Button(frame,text="C",bg='red',fg='black',padx=10,pady=10, command=pressclear)
