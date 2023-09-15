@@ -1,5 +1,6 @@
 # Tkinter-calculator
 
+this calculator operates in reverse bodmas fashion
 
 
 <img width="223" alt="image" src="https://github.com/ik339/Tkinter-calculator/assets/99621737/a64ae63e-1184-4dfd-b418-bda0dac0ec0b">
